@@ -2,3 +2,4 @@
 .idea
 build
 static
+!docker/sso/static
