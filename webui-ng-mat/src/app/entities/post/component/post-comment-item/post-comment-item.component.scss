@@ -1,0 +1,37 @@
+.actions {
+  justify-content: end;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.item {
+  margin-bottom: 16px;
+  transition: height 0.4s ease;
+  overflow: hidden;
+}
+
+.card-actions {
+  flex-wrap: wrap;
+}
+
+.item.active {
+  background: transparent;
+}
+
+.comment-card-action:not(:last-child) {
+  margin-right: 6px;
+}
+
+.textarea-form-field {
+  width: 100%;
+}
+
+.reaction {
+  font-size: 18px;
+}
+
+.reaction-button.active {
+  background-color: var(--mat-ripple-color);
+}

@@ -1,0 +1,40 @@
+<mat-card class="card">
+  <mat-card-content>
+    <h2 class="title">Personal Data</h2>
+    <form class="edit-form" [formGroup]="userFormGroup">
+      <div>
+        <mat-form-field class="edit-form-field">
+          <mat-label>Name</mat-label>
+          <input matInput [formControl]="userFormGroup.controls.name">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="edit-form-field">
+          <mat-label>Family Name</mat-label>
+          <input matInput [formControl]="userFormGroup.controls.familyName">
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" type="button" (click)="editUser()">Edit</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="card">
+  <mat-card-content>
+    <h2 class="title">Picture</h2>
+    <input class="image-input" type="file" #fileInput (change)="inputOriginalUserImage($event)">
+    <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Choose image
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="card">
+  <mat-card-content>
+    <h2 class="title">Password</h2>
+    <button mat-raised-button color="primary" type="button"
+            (click)="openPasswordChangeDialog()">Change password
+    </button>
+  </mat-card-content>
+</mat-card>

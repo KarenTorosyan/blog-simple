@@ -1,0 +1,144 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+@use 'editor' as editor;
+
+@include mat.core();
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --padding-normal: 13px;
+  --font-size-large: 18px;
+}
+
+$custom-light-pink-indigo: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$pink-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+$custom-dark-pink-indigo: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette(mat.$pink-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// PINK-INDIGO
+.pink-indigo {
+  @include mat.all-component-colors($custom-light-pink-indigo);
+  @include editor.theme($custom-light-pink-indigo);
+}
+
+.pink-indigo.dark {
+  @include mat.all-component-colors($custom-dark-pink-indigo);
+  @include editor.theme($custom-light-pink-indigo);
+}
+
+$custom-light-orange-indigo: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$orange-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+$custom-dark-orange-indigo: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette(mat.$orange-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// ORANGE-INDIGO
+.orange-indigo {
+  @include mat.all-component-colors($custom-light-orange-indigo);
+  @include editor.theme($custom-light-orange-indigo);
+}
+
+.orange-indigo.dark {
+  @include mat.all-component-colors($custom-dark-orange-indigo);
+  @include editor.theme($custom-light-orange-indigo);
+}
+
+$custom-light-green-indigo: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$green-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+$custom-dark-green-indigo: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette(mat.$green-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// GREEN-INDIGO
+.green-indigo {
+  @include mat.all-component-colors($custom-light-green-indigo);
+  @include editor.theme($custom-light-green-indigo);
+}
+
+.green-indigo.dark {
+  @include mat.all-component-colors($custom-dark-green-indigo);
+  @include editor.theme($custom-light-green-indigo);
+}
+
+$custom-light-blue-indigo: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$blue-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+$custom-dark-blue-indigo: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette(mat.$blue-palette),
+    accent: mat.define-palette(mat.$indigo-palette),
+    warn: mat.define-palette(mat.$red-palette)
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// BLUE-INDIGO
+.blue-indigo {
+  @include mat.all-component-colors($custom-light-blue-indigo);
+  @include editor.theme($custom-light-blue-indigo);
+}
+
+.blue-indigo.dark {
+  @include mat.all-component-colors($custom-dark-blue-indigo);
+  @include editor.theme($custom-dark-blue-indigo);
+}

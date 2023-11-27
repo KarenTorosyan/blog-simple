@@ -1,0 +1,32 @@
+<mat-form-field class="sort-form-field" *ngIf="postCommentsPage && postCommentsPage.content.length > 0">
+  <mat-label>Sort</mat-label>
+  <mat-select [formControl]="sortControl" (selectionChange)="onChangeSortCandidate()">
+    <mat-option *ngFor="let candidate of sortCandidates"
+                [value]="candidate.expression">{{candidate.title}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<ng-container *ngIf="postCommentsPage">
+  <ng-container *ngFor="let comment of postCommentsPage.content">
+    <app-post-comment-item [comment]="comment"
+                           [commentSubjects]="commentSubjects"
+                           [withSubjects]="withSubject"
+                           [reactionDetails]="commentReactionDetails"
+                           [currentUser]="currentUser"
+                           [currentUserReaction]="currentUserReaction"
+                           (reloadComments)="loadPostComments()">
+    </app-post-comment-item>
+  </ng-container>
+</ng-container>
+
+<mat-paginator *ngIf="postCommentsPage && postCommentsPage.content.length > 0"
+               (page)="handlePageEvent($event)"
+               [length]="postCommentsPage.totalElements"
+               [pageIndex]="postCommentsPage.number"
+               [pageSize]="postCommentsPage.size"
+               [showFirstLastButtons]="true"
+               [pageSizeOptions]="[5, 10, 25]"
+               [hidePageSize]="true"
+               aria-label="Select page">
+</mat-paginator>
+

@@ -1,0 +1,19 @@
+<div class="content" *ngIf="user">
+
+  <div class="post-create-card-actions" *ngIf="currentUser">
+    <a *ngIf="currentUser.id === user.id" mat-raised-button [routerLink]="['/post', 'create']">Create</a>
+  </div>
+
+  <mat-card *ngIf="postsLengthLoaded && postsLength < 1">
+    <mat-card-content>Haven't posts</mat-card-content>
+  </mat-card>
+
+  <app-post-list *ngIf="!postsLengthLoaded || (postsLengthLoaded && postsLength > 0)"
+                 [withAuthors]="false"
+                 [byAuthor]="user.email.address"
+                 pageNumQueryParam="post_page"
+                 sortQueryParam="post_sort"
+                 searchQueryParam="post_search"
+                 (postsLength)="initPostsLength($event)">
+  </app-post-list>
+</div>

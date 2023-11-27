@@ -1,0 +1,43 @@
+<header>
+  <app-root-container>
+
+    <mat-toolbar>
+      <mat-toolbar-row class="mat-toolbar-row">
+
+        <div class="col-left">
+          <button mat-button (click)="login()" *ngIf="!currentUser">
+            <mat-icon>login</mat-icon>
+            Login
+          </button>
+          <a mat-fab extended *ngIf="currentUser" [routerLink]="['/user', 'profile', currentUser.id]">
+            <mat-icon>account_circle</mat-icon>
+            <span>{{currentUser | nameOfUser}}</span>
+          </a>
+        </div>
+
+        <span class="spacer"></span>
+
+        <div class="col-right">
+          <a mat-button [routerLink]="'/'">
+            Home
+          </a>
+          <a mat-button *ngIf="currentUser" [routerLink]="['/info', 'token']">
+            <mat-icon>info</mat-icon>
+            Token info
+          </a>
+          <button mat-button *ngIf="currentUser" (click)="openLogoutDialog()">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </div>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row class="mat-toolbar-row-mobile">
+        <button class="menu-button" mat-mini-fab (click)="toggleSidebar.emit()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+  </app-root-container>
+</header>

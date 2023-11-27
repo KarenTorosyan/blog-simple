@@ -1,0 +1,42 @@
+.editor-actions {
+  justify-content: end;
+}
+
+.mat-stepper-vertical {
+  margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+.actions, .errors {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.errors {
+  list-style: none;
+  padding: 20px 0 0;
+  margin: 0;
+}
+
+.error {
+  color: var(--mat-stepper-header-error-state-label-text-color);
+  padding-top: 10px;
+}
+
+.errors li {
+  display: flex;
+  align-items: center;
+}
+
+.error-text {
+  padding-left: 10px;
+}
+
+.margin-top {
+  margin-top: 20px;
+}

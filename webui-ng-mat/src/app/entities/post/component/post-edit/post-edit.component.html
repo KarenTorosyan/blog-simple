@@ -1,0 +1,70 @@
+<app-root-container>
+  <mat-stepper orientation="horizontal" [linear]="true" #stepper>
+    <mat-step [stepControl]="postFormGroup.controls.content">
+      <ng-template matStepLabel>Fill content</ng-template>
+      <ckeditor [editor]="postEditor" [formControl]="postFormGroup.controls.content"
+                (ready)="editorReady($event)"></ckeditor>
+      <ul class="errors" *ngIf="postFormGroup.controls.content.invalid &&
+    (postFormGroup.controls.content.touched || postFormGroup.controls.content.dirty)">
+        <li class="error" *ngIf="postFormGroup.controls.content.errors?.['required']">
+          <mat-icon>error</mat-icon>
+          <span class="error-text">The content required!</span>
+        </li>
+        <li class="error" *ngIf="postFormGroup.controls.content.errors?.['maxlength']">
+          <mat-icon>error</mat-icon>
+          <span class="error-text">The content length must me max
+            {{postFormGroup.controls.content.errors?.['maxlength']['requiredLength']}} characters!</span>
+        </li>
+      </ul>
+      <div class="actions">
+        <button mat-button matStepperNext [disabled]="postFormGroup.controls.content.invalid">
+          <mat-icon iconPositionEnd>chevron_right</mat-icon>
+          Next
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>View</ng-template>
+      <ckeditor [editor]="editor" [data]="postFormGroup.controls.content.value!" [disabled]="true"></ckeditor>
+      <div class="actions">
+        <button mat-button matStepperPrevious>
+          <mat-icon>chevron_left</mat-icon>
+          Back to edit
+        </button>
+        <button mat-button matStepperNext>
+          <mat-icon iconPositionEnd>chevron_right</mat-icon>
+          Next
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Fill preview content</ng-template>
+      <ckeditor [editor]="postEditor" [formControl]="postFormGroup.controls.previewContent"
+                (ready)="editorReady($event)"></ckeditor>
+      <ul class="errors"
+          *ngIf="postFormGroup.controls.previewContent.invalid &&
+        (postFormGroup.controls.previewContent.touched || postFormGroup.controls.previewContent.dirty)">
+        <li class="error" *ngIf="postFormGroup.controls.previewContent.errors?.['required']">
+          <mat-icon>error</mat-icon>
+          <span class="error-text">The preview content required!</span>
+        </li>
+        <li class="error" *ngIf="postFormGroup.controls.previewContent.errors?.['maxlength']">
+          <mat-icon>error</mat-icon>
+          <span class="error-text">The preview content length must me max
+            {{postFormGroup.controls.previewContent.errors?.['maxlength']['requiredLength']}} characters!</span>
+        </li>
+      </ul>
+      <div class="actions">
+        <button mat-button matStepperPrevious>
+          <mat-icon>chevron_left</mat-icon>
+          Back
+        </button>
+        <button *ngIf="post" mat-button (click)="editPost(post.id)"
+                [disabled]="postFormGroup.controls.previewContent.invalid">
+          <mat-icon>add</mat-icon>
+          Apply
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</app-root-container>

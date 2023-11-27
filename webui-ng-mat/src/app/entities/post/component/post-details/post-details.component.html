@@ -1,0 +1,30 @@
+<app-root-container>
+  <ng-container *ngIf="post && author">
+    <mat-card class="card">
+      <mat-card-header>
+        <img class="avatar" mat-card-avatar [ngSrc]="author | pictureOfUser"
+             width="40" height="40" alt="" [routerLink]="['/user', 'profile', author.id]">
+        <mat-card-title class="title" [routerLink]="['/user', 'profile', author.id]">{{author | nameOfUser}}</mat-card-title>
+        <mat-card-subtitle>{{getPostDate(post)}}</mat-card-subtitle>
+        <span class="spacer"></span>
+        <a *ngIf="currentUser && currentUser.id === author.id" mat-button [routerLink]="['/post', 'edit', post.id]">Edit</a>
+        <button *ngIf="currentUser && currentUser.id === author.id"  mat-button (click)="openPostDeleteDialog(post.id)">Delete</button>
+      </mat-card-header>
+      <ckeditor [editor]="editor" [data]="post.content" [disabled]="true"></ckeditor>
+      <mat-card-actions class="actions">
+        <button class="reaction-button" [ngClass]="{'active': currentUserReaction?.reaction === reaction}" mat-button
+                *ngFor="let reaction of reactions" (click)="setOrDeleteReaction(post.id, reaction)">
+          <span class="reaction">{{reaction}}</span>
+          {{getReactionCount(reaction)}}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div class="card">
+      <app-post-comment-write [postId]="post.id" (reloadPostComments)="postCommentLoader.loadPostComments()">
+      </app-post-comment-write>
+    </div>
+
+    <app-post-comment-list [postId]="post.id" #postCommentLoader></app-post-comment-list>
+  </ng-container>
+</app-root-container>

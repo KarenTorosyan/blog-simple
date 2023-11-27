@@ -1,0 +1,10 @@
+{
+  "apiBlog": "http://localhost:8200",
+  "apiFiles": "http://localhost:8100",
+  "oAuth2": {
+    "issuer": "http://localhost:9000",
+    "clientId": "public",
+    "responseType": "code",
+    "scopes": "openid profile"
+  }
+}

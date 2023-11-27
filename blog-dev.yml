@@ -1,0 +1,141 @@
+version: '3.9'
+
+networks:
+  common:
+    driver: overlay
+
+volumes:
+  blog-server-db-postgresql:
+  blog-client-assets:
+  sso-server-db-mongo-1-1:
+  sso-static:
+  file-upload-static:
+
+secrets:
+  blog-postgresql-password:
+    file: docker/blog/postgresql-password
+  postgresql-password:
+    file: docker/postgresql/password
+  mongo-password:
+    file: docker/mongo/password
+  sso-mongo-password:
+    file: docker/sso/mongo-password
+  sso-smtp-password:
+    file: docker/sso/smtp-password
+  sso-client-google-secret:
+    file: docker/sso/client-google-secret
+  sso-client-azure-secret:
+    file: docker/sso/client-azure-secret
+  sso-client-facebook-secret:
+    file: docker/sso/client-facebook-secret
+
+configs:
+  nginx:
+    file: docker/nginx/nginx-dev.conf
+  blog-client:
+    file: docker/blog-client/app-config.json
+
+services:
+  nginx:
+    image: nginx:1.25-bookworm
+    networks:
+      - common
+    configs:
+      - source: nginx
+        target: /etc/nginx/nginx.conf
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+      - '9002:9002'
+
+  blog-server:
+    image: blog-simple-server:1.0
+    networks:
+      - common
+    env_file:
+      - docker/blog/dev.env
+    secrets:
+      - source: blog-postgresql-password
+        target: /run/secrets/postgresql-password
+    ports:
+      - '8200'
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 3
+
+  blog-server-db-postgresql:
+    image: postgres:16-alpine
+    networks:
+      - common
+    volumes:
+      - blog-server-db-postgresql:/var/lib/postgresql/data
+    env_file:
+      - docker/postgresql/dev.env
+    secrets:
+      - source: postgresql-password
+        target: /run/secrets/postgres-password
+    ports:
+      - '5555:5432'
+
+  blog-client-angular:
+    image: blog-simple-client-angular-material:1.0
+    networks:
+      - common
+    volumes:
+      - blog-client-assets:/usr/share/nginx/html/assets
+      - ./docker/blog-client/app-config.json:/usr/share/nginx/html/assets/app-config.json
+    ports:
+      - '4200:80'
+
+  file-upload-server:
+    image: karentorosyan/file-upload-server:1.0
+    networks:
+      - common
+    volumes:
+      - file-upload-static:/var/file-upload-server/static
+    env_file:
+      - docker/fileupload/dev.env
+    ports:
+      - '8100:8100'
+
+  sso-server:
+    image: karentorosyan/sso:1.0
+    networks:
+      - common
+    volumes:
+      - sso-static:/var/sso/static
+      - ./docker/sso/static/templates:/var/sso/static/templates
+    env_file:
+      - docker/sso/dev.env
+    secrets:
+      - source: sso-mongo-password
+        target: /run/secrets/mongo-password
+      - source: sso-smtp-password
+        target: /run/secrets/smtp-password
+      - source: sso-client-google-secret
+        target: /run/secrets/client-google-secret
+      - source: sso-client-azure-secret
+        target: /run/secrets/client-azure-secret
+      - source: sso-client-facebook-secret
+        target: /run/secrets/client-facebook-secret
+    ports:
+      - '9000'
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    dns_search: smtp-mail.outlook.com
+
+  sso-server-db-mongo-1-1:
+    image: mongo:7.0.1-jammy
+    networks:
+      - common
+    volumes:
+      - sso-server-db-mongo-1-1:/data/db
+    env_file:
+      - docker/mongo/dev.env
+    secrets:
+      - source: mongo-password
+        target: /run/secrets/mongo-password
+    ports:
+      - '27020:27017'

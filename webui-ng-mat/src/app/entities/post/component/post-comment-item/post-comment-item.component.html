@@ -1,0 +1,78 @@
+<mat-card *ngIf="comment" class="item" [id]="comment.id"
+          [ngClass]="{'active': viewCommentRepliesList && commentReplies.length > 0}">
+  <mat-card-header>
+    <img mat-card-avatar *ngIf="withSubjects && subject" [ngSrc]="subject | pictureOfUser" width="50" height="50" alt=""
+         [routerLink]="['/user', 'profile', subject.id]">
+    <mat-card-title *ngIf="withSubjects && subject"
+                    [routerLink]="['/user', 'profile', subject.id]">{{subject | nameOfUser}}</mat-card-title>
+    <mat-card-subtitle>{{getCommentDate(comment)}}</mat-card-subtitle>
+    <span class="spacer"></span>
+    <button mat-button *ngIf="currentUser && currentUser.email.address === comment.subject"
+            (click)="toggleCommentEditTextarea()">Edit</button>
+    <button mat-button *ngIf="currentUser && currentUser.email.address === comment.subject"
+            (click)="openCommentDeleteDialog()">Delete</button>
+  </mat-card-header>
+  <mat-card-content *ngIf="!isVisibleEditCommentTextarea">{{comment.content}}</mat-card-content>
+  <mat-card-actions *ngIf="isVisibleEditCommentTextarea">
+    <mat-form-field class="textarea-form-field">
+      <mat-label>Comment</mat-label>
+      <textarea matInput [formControl]="commentControl"></textarea>
+      <mat-error *ngIf="commentControl.invalid && (commentControl.touched || commentControl.dirty)">
+        <span *ngIf="commentControl.hasError('required')">The comment text required!</span>
+        <span *ngIf="commentControl.hasError('maxlength')">The comment text must be max
+          {{commentControl.errors?.['maxlength']['requiredLength']}} but specified
+          {{commentControl.errors?.['maxlength']['actualLength']}} characters!</span>
+      </mat-error>
+      <button class="comment-card-action" mat-raised-button (click)="editPostComment()">Apply</button>
+      <button class="comment-card-action" mat-raised-button (click)="toggleCommentEditTextarea()">Cancel</button>
+    </mat-form-field>
+  </mat-card-actions>
+  <mat-card-actions class="card-actions" *ngIf="!isVisibleReplyCommentTextarea && isVisibleReplyAction">
+    <button class="reaction-button" mat-button *ngFor="let reaction of reactions"
+            (click)="setOrDeleteReaction(comment.id, reaction)"
+            [ngClass]="{'active': currentUser && currentUserHaveReaction(comment.id, reaction)}">
+      <span class="reaction">{{reaction}}</span>
+      {{getReactionsCount(comment.id, reaction)}}
+    </button>
+    <button *ngIf="withReplyAction" mat-button (click)="toggleReplyPostCommentActionVisibility()">
+      <mat-icon>reply</mat-icon>
+      Reply
+    </button>
+    <button mat-button *ngIf="!viewCommentRepliesList" (click)="loadCommentReplies(comment.id)">
+      <mat-icon>expand_more</mat-icon>
+      View replies
+    </button>
+    <button mat-button color="primary" *ngIf="viewCommentRepliesList" (click)="hideCommentReplies()">
+      <mat-icon>expand_less</mat-icon>
+      Hide replies
+    </button>
+    <a mat-button *ngIf="withPostRouteLink" [routerLink]="['/post', 'details', comment.postId]">
+      <mat-icon>navigate_next</mat-icon>
+      Go to post
+    </a>
+  </mat-card-actions>
+  <mat-card-content *ngIf="viewCommentRepliesList && commentReplies.length < 1">
+    <span>No replies</span>
+  </mat-card-content>
+  <ng-container *ngIf="viewCommentRepliesList">
+    <ng-container *ngFor="let commentReply of commentReplies">
+      <app-post-comment-item [comment]="commentReply"
+                             [commentSubjects]="commentRepliesSubjects"></app-post-comment-item>
+    </ng-container>
+  </ng-container>
+  <mat-card-actions *ngIf="isVisibleReplyCommentTextarea">
+    <mat-form-field class="textarea-form-field">
+      <mat-label>Reply to comment</mat-label>
+      <textarea matInput [formControl]="commentReplyControl"></textarea>
+      <mat-error *ngIf="commentReplyControl.invalid && (commentReplyControl.touched || commentReplyControl.dirty)">
+        <span *ngIf="commentReplyControl.hasError('required')">The reply text to comment required!</span>
+        <span *ngIf="commentReplyControl.hasError('maxlength')">The comment text must be max
+          {{commentReplyControl.errors?.['maxlength']['requiredLength']}} but specified
+          {{commentReplyControl.errors?.['maxlength']['actualLength']}} characters!</span>
+      </mat-error>
+      <button class="comment-card-action" mat-raised-button (click)="replyPostComment(comment.id)">Reply</button>
+      <button class="comment-card-action" mat-raised-button (click)="toggleReplyPostCommentActionVisibility()">Cancel
+      </button>
+    </mat-form-field>
+  </mat-card-actions>
+</mat-card>

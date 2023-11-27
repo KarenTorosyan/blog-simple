@@ -1,0 +1,11 @@
+<app-header (toggleSidebar)="sidebar.toggleSidebar()"></app-header>
+
+<app-sidebar #sidebar>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer></app-footer>
+
+</app-sidebar>

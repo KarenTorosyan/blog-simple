@@ -1,0 +1,19 @@
+.title:not(:first-child) {
+  padding-top: 20px;
+}
+
+.image-input {
+  display: none;
+}
+
+.edit-form {
+  width: 100%;
+}
+
+.edit-form-field {
+  width: min(400px, 100%);
+}
+
+.card {
+  margin-top: 16px;
+}

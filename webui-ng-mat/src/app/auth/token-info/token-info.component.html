@@ -1,0 +1,28 @@
+<app-root-container>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Id token</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <span id="idToken">{{idToken}}</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Access token</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <span id="accessToken">{{accessToken}}</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Claims</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <span id="claims">{{claims | json}}</span>
+    </mat-card-content>
+  </mat-card>
+</app-root-container>

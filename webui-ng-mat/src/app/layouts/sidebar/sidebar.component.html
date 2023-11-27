@@ -1,0 +1,47 @@
+<aside>
+  <mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="over">
+      <div class="card">
+        <nav>
+          <ul class="list">
+            <li *ngIf="!currentUser">
+              <button mat-button (click)="login()">
+                <mat-icon>login</mat-icon>
+                Login
+              </button>
+            </li>
+            <li *ngIf="currentUser">
+              <a mat-fab extended [routerLink]="['/user', 'profile', currentUser.id]" (click)="drawer.toggle()">
+                <mat-icon>account_circle</mat-icon>
+                <span>{{currentUser | nameOfUser}}</span>
+              </a>
+            </li>
+            <li>
+              <a mat-button [routerLink]="'/'" (click)="drawer.toggle()">Home</a>
+            </li>
+          </ul>
+        </nav>
+        <span class="spacer"></span>
+        <nav>
+          <ul class="list">
+            <li *ngIf="currentUser">
+              <a mat-button [routerLink]="['/info', 'token']" (click)="drawer.toggle()">
+                <mat-icon>info</mat-icon>
+                Token info
+              </a>
+            </li>
+            <li *ngIf="currentUser">
+              <button mat-button (click)="openLogoutDialog()">
+                <mat-icon>logout</mat-icon>
+                Logout
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="mat-drawer-content">
+      <ng-content></ng-content>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</aside>

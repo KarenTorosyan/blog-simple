@@ -1,0 +1,28 @@
+.posts {
+  padding-bottom: var(--padding-normal);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: var(--padding-normal);
+}
+
+.search-form-field {
+  flex-grow: 1;
+}
+
+.sort-form-field {
+  width: min(300px, 100%);
+}
+
+.paginator {
+  width: 100%;
+}
+
+@media (max-width: 567px) {
+  .sort-form-field {
+    flex-grow: 1;
+  }
+}

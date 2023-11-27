@@ -1,0 +1,31 @@
+<mat-card class="card">
+  <mat-card-content>
+
+    <h2 class="title">Theme palette</h2>
+    <section>
+      <mat-radio-group [formControl]="themePaletteControl" (change)="themeChanged()">
+        <mat-radio-button class="setting-margin" color="primary" [value]="theme.pinkIndigoPalette">
+          Pink
+        </mat-radio-button>
+        <mat-radio-button class="setting-margin" color="primary" [value]="theme.orangeIndigoPalette">
+          Orange
+        </mat-radio-button>
+        <mat-radio-button class="setting-margin" color="primary" [value]="theme.greenIndigoPalette">
+          Green
+        </mat-radio-button>
+        <mat-radio-button class="setting-margin" color="primary" [value]="theme.blueIndigoPalette">
+          Blue
+        </mat-radio-button>
+      </mat-radio-group>
+    </section>
+
+    <h2 class="title">Theme mode</h2>
+    <section>
+      <mat-slide-toggle class="setting-margin" color="primary"
+                        [checked]="theme.isDarkMode()" (click)="theme.toggleThemeMode()">Dark
+      </mat-slide-toggle>
+    </section>
+
+  </mat-card-content>
+</mat-card>
+

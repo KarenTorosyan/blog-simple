@@ -1,0 +1,9 @@
+.sort-form-field {
+  width: min(200px, 100%);
+}
+
+@media (max-width: 767px) {
+  .sort-form-field {
+    width: 100%;
+  }
+}

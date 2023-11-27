@@ -1,0 +1,15 @@
+<mat-card *ngIf="post && postAuthors.has(post.author)">
+  <mat-card-header>
+    <img class="avatar" mat-card-avatar *ngIf="withAuthors" [ngSrc]="getAuthorByEmail(post.author) | pictureOfUser"
+         width="40" height="40" alt="" [routerLink]="['/user', 'profile', getAuthorByEmail(post.author).id]">
+    <mat-card-title class="title" *ngIf="withAuthors"
+                    [routerLink]="['/user', 'profile', getAuthorByEmail(post.author).id]">
+      {{getAuthorByEmail(post.author) | nameOfUser}}
+    </mat-card-title>
+    <mat-card-subtitle>{{getPostDate(post)}}</mat-card-subtitle>
+  </mat-card-header>
+  <ckeditor [editor]="editor" [data]="post.previewContent" [disabled]="true"></ckeditor>
+  <mat-card-actions>
+    <a mat-button [routerLink]="['/post', 'details', post.id]">READ MORE</a>
+  </mat-card-actions>
+</mat-card>

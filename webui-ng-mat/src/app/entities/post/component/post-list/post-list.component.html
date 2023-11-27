@@ -1,0 +1,43 @@
+<app-root-container>
+  <ng-container *ngIf="postsPage">
+
+    <div class="controls">
+      <mat-form-field class="search-form-field" *ngIf="withSearching">
+        <mat-label>Search posts</mat-label>
+        <input matInput type="text" [formControl]="searchControl" (keyup)="onChangeSearchTerm()">
+        <button *ngIf="searchControl.value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="clearSearchControl()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <ng-container *ngIf="withSorting">
+        <mat-form-field class="sort-form-field">
+          <mat-label>Sort</mat-label>
+          <mat-select [formControl]="sortControl" (selectionChange)="onChangeSortCandidate()">
+            <mat-option *ngFor="let candidate of sortCandidates"
+                        [value]="candidate.expression">{{candidate.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </div>
+
+    <div class="posts" *ngFor="let post of postsPage.content">
+      <app-post-item [post]="post"
+                     [postAuthors]="postAuthors"
+                     [withAuthors]="withAuthors"></app-post-item>
+    </div>
+
+    <mat-paginator class="paginator" *ngIf="postsPage"
+                   (page)="handlePageEvent($event)"
+                   [length]="postsPage.totalElements"
+                   [pageIndex]="postsPage.number"
+                   [pageSize]="postsPage.size"
+                   [showFirstLastButtons]="true"
+                   [pageSizeOptions]="[5, 10, 25]"
+                   [hidePageSize]="true"
+                   aria-label="Select page">
+    </mat-paginator>
+
+  </ng-container>
+</app-root-container>

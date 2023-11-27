@@ -1,0 +1,35 @@
+<app-root-container>
+<mat-card class="card" *ngIf="user">
+  <mat-card-header class="mat-card-header">
+    <mat-card-title-group class="user-profile-header-group">
+      <img class="profile-avatar" mat-card-md-image [ngSrc]="user | pictureOfUser"
+           priority="" width="100" height="100" alt="">
+      <div class="profile-data">
+        <mat-card-title class="profile-data-title">{{user | nameOfUser}}</mat-card-title>
+        <mat-card-subtitle class="profile-data-subtitle">{{user.email.address}}</mat-card-subtitle>
+      </div>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content>
+    <nav [tabPanel]="tabPanel" class="tabs"
+         mat-tab-nav-bar
+         mat-stretch-tabs="false"
+         mat-align-tabs="start"
+         animationDuration="200">
+      <a mat-tab-link [routerLink]="['posts']"
+         routerLinkActive #postsRoute="routerLinkActive" [active]="postsRoute.isActive">Posts</a>
+      <a mat-tab-link [routerLink]="['comments']"
+         routerLinkActive #commentsRoute="routerLinkActive" [active]="commentsRoute.isActive">Comments</a>
+      <a mat-tab-link [routerLink]="['account']" *ngIf="currentUser && currentUser.id === user.id"
+         routerLinkActive #accountRoute="routerLinkActive" [active]="accountRoute.isActive">Account</a>
+      <a mat-tab-link [routerLink]="['settings']" *ngIf="currentUser && currentUser.id === user.id"
+         routerLinkActive #settingsRoute="routerLinkActive" [active]="settingsRoute.isActive">Settings</a>
+    </nav>
+
+  </mat-card-content>
+</mat-card>
+
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>
+</app-root-container>

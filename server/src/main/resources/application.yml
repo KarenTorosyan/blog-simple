@@ -1,0 +1,55 @@
+server:
+  port: 8200
+  forward-headers-strategy: framework
+
+data-search:
+  adapter: postgres
+
+spring:
+  main:
+    banner-mode: off
+    web-application-type: reactive
+
+  r2dbc:
+    url: r2dbc:postgresql:postgres://localhost:5432/blog
+    username: postgres
+    password: postgres
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:/sql/data.sql
+
+  messages:
+    basename: locales/messages
+
+  web:
+    resources:
+      static-locations: classpath:static, file:server/static
+    locale-resolver: accept_header
+
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          jwk-set-uri: ${sso.server}/oauth2/jwks
+          jws-algorithms: RS256
+          audiences:
+            - public
+
+sso:
+  server: http://localhost:9000
+
+springdoc:
+  swagger-ui:
+    csrf:
+      enabled: true
+    oauth:
+      client-id: public
+      use-pkce-with-authorization-code-grant: true
+      scopes: openid, profile
+      additional-query-string-params:
+        authorization-uri: ${sso.server}/oauth2/authorize
+        token-uri: ${sso.server}/oauth2/token
+

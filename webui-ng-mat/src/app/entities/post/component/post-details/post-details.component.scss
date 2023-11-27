@@ -1,0 +1,32 @@
+.card:not(:first-child) {
+  margin-top: var(--padding-normal);
+}
+
+.mat-card-actions {
+  justify-content: end;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.comment-write {
+  margin-top: 16px;
+}
+
+.reaction {
+  font-size: 18px;
+}
+
+.reaction-button.active {
+  background-color: var(--mat-ripple-color);
+}
+
+.actions {
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+
+.actions::-webkit-scrollbar {
+  display: none;
+}

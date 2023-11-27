@@ -1,0 +1,40 @@
+<div class="content" *ngIf="!postComments || postComments.content.length < 1">
+  <mat-card>
+    <mat-card-content>Haven't comments</mat-card-content>
+  </mat-card>
+</div>
+
+<div class="content" *ngIf="postComments && postComments.content.length > 0">
+  <mat-form-field class="sort-form-field">
+    <mat-label>Sort</mat-label>
+    <mat-select [formControl]="sortControl" (selectionChange)="onChangeSortCandidate()">
+      <mat-option *ngFor="let candidate of sortCandidates"
+                  [value]="candidate.expression">{{candidate.title}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-container *ngIf="postComments">
+    <ng-container *ngFor="let comment of postComments.content">
+      <app-post-comment-item [comment]="comment"
+                             [withSubjects]="false"
+                             [canSetReaction]="false"
+                             [withReplyAction]="false"
+                             [currentUser]="currentUser"
+                             [reactionDetails]="reactionDetails"
+                             [withPostRouteLink]="true"
+                             (reloadComments)="loadPostComments()"
+      ></app-post-comment-item>
+    </ng-container>
+  </ng-container>
+
+  <mat-paginator *ngIf="postComments"
+                 (page)="handlePageEvent($event)"
+                 [length]="postComments.totalElements"
+                 [pageIndex]="postComments.number"
+                 [pageSize]="postComments.size"
+                 [showFirstLastButtons]="true"
+                 [pageSizeOptions]="[5, 10, 25]"
+                 [hidePageSize]="true"
+                 aria-label="Select page">
+  </mat-paginator>
+</div>

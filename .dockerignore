@@ -1,0 +1,10 @@
+.gradle
+.idea
+build
+webui-ng-mat
+./blog-client-ng
+.gitattributes
+.gitignore
+blog-dev.yml
+Dockerfile
+README.md
