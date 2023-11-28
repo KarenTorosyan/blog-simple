@@ -97,7 +97,9 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.page, this.sort, this.search, this.byAuthor)
       .subscribe(postsPage => {
         this.postsPage = postsPage
-        this.postsLength.emit(postsPage.content.length)
+        if (!this.search) {
+          this.postsLength.emit(postsPage.totalElements)
+        }
         this.loadPostAuthors(postsPage)
       }))
   }
@@ -141,9 +143,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   clearSearchControl() {
+    const queryParams = {...this.route.snapshot.queryParams}
+    queryParams[this.searchQueryParam] = null
     this.searchControl.setValue("")
-    this.search = {term: ""}
-    this.sortControl.setValue(this.defaultSortCandidate)
-    this.loadPostsPage()
+    this.search = undefined
+    this.router.navigate([], {queryParams: queryParams})
+        .then(() => this.loadPostsPage())
   }
 }
